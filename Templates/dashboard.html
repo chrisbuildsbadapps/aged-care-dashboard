@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Regis Dandenong Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        background-color: #f9f9f9;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+      .navbar {
+        background-color: #93328e;
+      }
+      .navbar-brand, .nav-link {
+        color: #fff !important;
+      }
+      h3 {
+        color: #a8397d;
+      }
+      .card {
+        border: none;
+        margin-bottom: 20px;
+      }
+      .card-title {
+        color: #a8397d;
+      }
+      .chart-container {
+        margin-top: 30px;
+      }
+      .back-button {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar with Back Button -->
+    <nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href="{{ url_for('home') }}">Back</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container mt-4">
+      <h3 class="mb-4">Regis Dandenong</h3>
+      <div class="row">
+        <!-- Card for Occupancy Rate -->
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title">Occupancy Rate</h5>
+              <p class="card-text">{{ data[0].value }}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Card for Compliance Rates -->
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title">Compliance Rates</h5>
+              <p class="card-text">{{ data[1].value }}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Card for TMF Spend -->
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title">TMF Spend</h5>
+              <p class="card-text">{{ data[2].value }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Charts Row: Three Charts Side by Side -->
+      <div class="row chart-container">
+        <!-- Occupancy Rate Chart -->
+        <div class="col-md-4">
+          <canvas id="occupancyChart"></canvas>
+        </div>
+        <!-- Compliance Rates Chart -->
+        <div class="col-md-4">
+          <canvas id="complianceChart"></canvas>
+        </div>
+        <!-- TMF Spend Chart -->
+        <div class="col-md-4">
+          <canvas id="tmfChart"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Chart.js Scripts -->
+    <script>
+      // Occupancy Chart Data
+      var ctxOccupancy = document.getElementById('occupancyChart').getContext('2d');
+      var occupancyChart = new Chart(ctxOccupancy, {
+          type: 'line',
+          data: {
+              labels: {{ occupancy_chart['labels']|tojson }},
+              datasets: [{
+                  label: 'Occupancy Rate (%)',
+                  data: {{ occupancy_chart['values']|tojson }},
+                  borderColor: '#93328e',
+                  backgroundColor: 'rgba(147,50,142,0.2)',
+                  fill: true,
+                  tension: 0.1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true,
+                      max: 100
+                  }
+              }
+          }
+      });
+      
+      // Compliance Chart Data (random data between 70% and 85%)
+      var ctxCompliance = document.getElementById('complianceChart').getContext('2d');
+      var complianceChart = new Chart(ctxCompliance, {
+          type: 'line',
+          data: {
+              labels: {{ compliance_chart['labels']|tojson }},
+              datasets: [{
+                  label: 'Compliance Rate (%)',
+                  data: {{ compliance_chart['values']|tojson }},
+                  borderColor: '#a8397d',
+                  backgroundColor: 'rgba(168,57,125,0.2)',
+                  fill: true,
+                  tension: 0.1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true,
+                      max: 100
+                  }
+              }
+          }
+      });
+      
+      // TMF Spend Chart Data (weekly spend between $1000 and $2000)
+      var ctxTMF = document.getElementById('tmfChart').getContext('2d');
+      var tmfChart = new Chart(ctxTMF, {
+          type: 'bar',
+          data: {
+              labels: {{ tmf_chart['labels']|tojson }},
+              datasets: [{
+                  label: 'TMF Spend ($)',
+                  data: {{ tmf_chart['values']|tojson }},
+                  borderColor: '#c63663',
+                  backgroundColor: 'rgba(198,54,99,0.2)',
+                  fill: true
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+    </script>
+    
+    <!-- Optional Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

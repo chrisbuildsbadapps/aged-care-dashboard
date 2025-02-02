@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Home | Pure Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+      @font-face {
+         font-family: 'Gilroy';
+         src: url("{{ url_for('static', filename='fonts/Gilroy-Bold.ttf') }}") format("truetype");
+         font-weight: bold;
+      }
+      body {
+        background-color: #f9f9f9;
+        font-family: 'Gilroy', sans-serif;
+      }
+      .navbar {
+        background-color: #93328e;
+      }
+      /* Navbar with three flex sections */
+      .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .navbar-left img {
+        height: 50px;
+      }
+      .navbar-center {
+        text-align: center;
+        flex: 1;
+      }
+      .navbar-center .navbar-brand {
+        color: #fff;
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
+      .navbar-right .nav-link {
+        color: #fff !important;
+      }
+      .welcome-text {
+         text-align: center;
+         margin: 20px 0;
+         font-size: 1.5rem;
+         color: #93328e;
+      }
+      .module-card {
+        margin: 20px 0;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.2s;
+        background-color: #a8397d;
+        color: #fff;
+      }
+      .module-card:hover {
+        transform: scale(1.05);
+        background-color: #c63663;
+      }
+      .module-card .card-body {
+        padding: 30px;
+      }
+      .module-title {
+        font-size: 1.5rem;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar with logo (left), centered brand, and logout (right) -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <div class="navbar-left">
+          <img src="{{ url_for('static', filename='Purefood-logo.svg') }}" alt="Pure Food Co Logo">
+        </div>
+        <div class="navbar-center">
+          <span class="navbar-brand">Pure Platform</span>
+        </div>
+        <div class="navbar-right">
+          <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="container mt-4">
+      <h2 class="welcome-text">Where nutrition meets technology</h2>
+      <div class="row">
+        <!-- Module 1: Dashboard -->
+        <div class="col-md-4">
+          <a href="{{ url_for('dashboard') }}" style="text-decoration: none;">
+            <div class="card module-card">
+              <div class="card-body">
+                <i class="fas fa-tachometer-alt fa-3x"></i>
+                <div class="module-title">Dashboard</div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- Module 2: Training -->
+        <div class="col-md-4">
+          <a href="#" style="text-decoration: none;">
+            <div class="card module-card">
+              <div class="card-body">
+                <i class="fas fa-chalkboard-teacher fa-3x"></i>
+                <div class="module-title">Training</div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- Module 3: Budget Tracker -->
+        <div class="col-md-4">
+          <a href="#" style="text-decoration: none;">
+            <div class="card module-card">
+              <div class="card-body">
+                <i class="fas fa-dollar-sign fa-3x"></i>
+                <div class="module-title">Budget Tracker</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <!-- Module 4: Compliance Tracker -->
+        <div class="col-md-4">
+          <a href="#" style="text-decoration: none;">
+            <div class="card module-card">
+              <div class="card-body">
+                <i class="fas fa-check-circle fa-3x"></i>
+                <div class="module-title">Compliance Tracker</div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- Module 5: Menu Planner -->
+        <div class="col-md-4">
+          <a href="#" style="text-decoration: none;">
+            <div class="card module-card">
+              <div class="card-body">
+                <i class="fas fa-utensils fa-3x"></i>
+                <div class="module-title">Menu Planner</div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- Module 6: Order -->
+        <div class="col-md-4">
+          <a href="#" style="text-decoration: none;">
+            <div class="card module-card">
+              <div class="card-body">
+                <i class="fas fa-shopping-cart fa-3x"></i>
+                <div class="module-title">Order</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Optional Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
